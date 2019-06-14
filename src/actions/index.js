@@ -1,15 +1,73 @@
-import { POST_ACTION, USER_ACTION } from "./actionTypes";
+import myserver from "../apis/myserver";
 
-export const authUser = form => {};
+import { POST_ACTION, USER_ACTION, ERROR_HANDLER } from "./actionTypes";
 
-export const registerUser = form => {
-  return {
-    type: USER_ACTION.CREATE,
-    payload: {
+export const registerUser = form => async dispatch => {
+  try {
+    const { data, status } = await myserver.post("/users", {
       name: form.name,
-      password: form.password,
-      email: form.email
+      email: form.email,
+      password: form.password
+    });
+
+    if (status !== 200) {
+      const err = new Error("Register gagal!");
+      err.errorCode = status;
+      err.message = "Register gagal!";
+      throw err;
     }
+
+    localStorage.setItem("token", data.payload.token);
+    dispatch({
+      type: USER_ACTION.AUTH,
+      payload: {
+        ...data.payload
+      }
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_HANDLER.ADD,
+      payload: {
+        error
+      }
+    });
+  }
+};
+
+export const loginUser = form => async dispatch => {
+  try {
+    const { data, status } = await myserver.post("/users/auth/login", {
+      email: form.email,
+      password: form.password
+    });
+
+    if (status !== 200) {
+      const err = new Error("Login gagal!");
+      err.errorCode = status;
+      err.message = "Login gagal!";
+      throw err;
+    }
+
+    localStorage.setItem("token", data.payload.token);
+    dispatch({
+      type: USER_ACTION.AUTH,
+      payload: {
+        ...data.payload
+      }
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_HANDLER.ADD,
+      payload: {
+        error
+      }
+    });
+  }
+};
+
+export const clearError = () => {
+  return {
+    type: ERROR_HANDLER.REMOVE
   };
 };
 

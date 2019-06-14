@@ -2,6 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { logoutUser } from "../actions";
+import { Link } from "react-router-dom";
 
 function Navbar({ user, logoutUser }) {
   let userLink = null;
@@ -41,9 +42,9 @@ function Navbar({ user, logoutUser }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <a className="navbar-brand" href="hola">
-          OnePost
-        </a>
+        <Link className="navbar-brand" to="/">
+          Streamer
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -58,28 +59,25 @@ function Navbar({ user, logoutUser }) {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="hola">
-                Home <span className="sr-only">(current)</span>
-              </a>
+            <li className="nav-item">
+              <Link className="nav-link" to="/contact">
+                Contact
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="hola">
-                Link
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link disabled"
-                href="holaola"
-                tabIndex="-1"
-                aria-disabled="true"
-              >
-                Disabled
-              </a>
+              <Link className="nav-link" to="/about">
+                AboutUs
+              </Link>
             </li>
           </ul>
-          <ul className="navbar-nav">{userLink}</ul>
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link" to="/about">
+                Stream
+              </Link>
+            </li>
+            {userLink}
+          </ul>
         </div>
       </div>
     </nav>

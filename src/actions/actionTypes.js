@@ -14,3 +14,8 @@ export const POST_ACTION = {
   UPDATE: "POST_UPDATE",
   SHOW: "POST_SHOW"
 };
+
+export const ERROR_HANDLER = {
+  ADD: "ERROR_ADD",
+  REMOVE: "ERROR_REMOVE"
+};

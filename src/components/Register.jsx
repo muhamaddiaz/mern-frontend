@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+// import _ from "lodash";
 
 import { registerUser } from "../actions";
 
@@ -18,13 +20,17 @@ class Register extends Component {
   };
 
   onSubmitHandler = form => {
-    console.log("submitted");
     this.props.registerUser(form);
   };
 
   render() {
     return (
       <div>
+        <ToastContainer
+          enableMultiContainer
+          containerId={"A"}
+          position={toast.POSITION.BOTTOM_RIGHT}
+        />
         <form
           action=""
           onSubmit={e => {
@@ -73,7 +79,8 @@ class Register extends Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    error: state.error
   };
 }
 
